@@ -1,6 +1,10 @@
 # verify-msg-code
 
-## 基于 Vue2.5+的移动端验证码输入组件.
+## verify-msg-code 是基于 verify-input-code 插件开发的升级版
+
+## 由于前端一直没时间维护 verify-input-code 所以决定将其废弃
+
+## verify-msg-code 是基于 Vue2.5+的移动端验证码输入组件.
 
 ## 功能预览
 
