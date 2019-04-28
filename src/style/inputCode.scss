@@ -98,7 +98,11 @@
         // border-right: 1px solid #323232;
       }
     }
-
+    >div.on{
+      &:after {
+        border-bottom: 1px solid #42b983;
+      }
+    }
     // >div.code_box:after {
     //   content: "";
     //   display: block;

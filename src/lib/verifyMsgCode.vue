@@ -1,18 +1,59 @@
 <template type="x/template">
   <div class="verify_input_code">
     <div class="input" @click="focusInput" :style="{'height':height}">
-      <div class="input-code" :class="{first: inputCodeNum===0, last: inputCodeNum === 6}" :style="{left: left, 'z-index': zIndex, 'height': height, 'width': blockSize - 1 + '%'}">
+      <div
+        class="input-code"
+        :class="{first: inputCodeNum===0, last: inputCodeNum === 6}"
+        :style="{left: left, 'z-index': zIndex, 'height': height, 'width': blockSize - 1 + '%'}"
+      >
         <template v-if="type==='idcard'">
-          <input ref="inputIdcardCode" type="tel" :style="{'font-size': inputSize, 'color': inputColor}" @keyup="inputCodeEvent($event)" @blur="blurInput" v-model="inputCode" autofocus maxlength="1" @keyup.delete="deleteInput">
+          <input
+            ref="inputIdcardCode"
+            type="tel"
+            :style="{'font-size': inputSize, 'color': inputColor}"
+            @keyup="inputCodeEvent($event)"
+            @blur="blurInput"
+            v-model="inputCode"
+            autofocus
+            maxlength="1"
+            @keyup.delete="deleteInput"
+          >
         </template>
         <template v-if="type==='txt'">
-          <input ref="inputTxtCode" type="text" :style="{'font-size': inputSize, 'color': inputColor}" @keyup="inputCodeEvent($event)" @blur="blurInput" v-model="inputCode" autofocus maxlength="1" @keyup.delete="deleteInput">
+          <input
+            ref="inputTxtCode"
+            type="text"
+            :style="{'font-size': inputSize, 'color': inputColor}"
+            @keyup="inputCodeEvent($event)"
+            @blur="blurInput"
+            v-model="inputCode"
+            autofocus
+            maxlength="1"
+            @keyup.delete="deleteInput"
+          >
         </template>
         <template v-if="type==='number'">
-          <input ref="inputMsgCode" type="text" :style="{'font-size': inputSize, 'color': inputColor}" @keyup="inputCodeEvent($event)" @blur="blurInput" v-model="inputCode" autofocus maxlength="1" @keyup.delete="deleteInput">
+          <input
+            ref="inputMsgCode"
+            type="text"
+            :style="{'font-size': inputSize, 'color': inputColor}"
+            @keyup="inputCodeEvent($event)"
+            @blur="blurInput"
+            v-model="inputCode"
+            autofocus
+            maxlength="1"
+            @keyup.delete="deleteInput"
+          >
         </template>
       </div>
-      <div class="code_box" v-for="(item,index) in block" :style="{'font-size': sSize, 'color': sColor, 'height': height, 'line-height': height, 'width': blockWidth}" v-text="codeArray[index] ? codeArray[index] : ''" :class="{'first':index === 0, 'last': index === number - 1}"></div>
+      <div
+        class="code_box"
+        v-for="(item,index) in block"
+        :key="index"
+        :style="{'font-size': sSize, 'color': sColor, 'height': height, 'line-height': height, 'width': blockWidth}"
+        v-text="codeArray[index] ? codeArray[index] : ''"
+        :class="{'first':index === 0, 'last': index === number - 1,'on':codeArray[index]}"
+      ></div>
     </div>
   </div>
 </template>
@@ -31,17 +72,12 @@ export default {
     success: {
       //输入完成后的回调
       type: Function,
-      default: () => {}
-    },
-    error: {
-      //输入错误的时候调用的函数
-      type: Function,
-      default: () => {}
+      default: () => { }
     },
     getInput: {
       //输入都回调
       type: Function,
-      default: () => {}
+      default: () => { }
     },
     sSize: {
       // 显示字体大小
@@ -149,32 +185,21 @@ export default {
     inputCodeEvent(event) {
       //每次输入的事件处理
       if (!this.inputCode) return
-      if (
-        this.type === 'number' &&
-        (event.keyCode < 48 || event.keyCode > 57)
-      ) {
+      if (this.type === 'number' && (event.keyCode < 48 || event.keyCode > 57)) {
         // 要求输入数字类型
-        if (!this.error(this.inputCode)) {
-          //判断输入的值是否正确
-          this.inputCode = ''
-          return
-        }
+        this.inputCode = ''
+        return
       }
       if (this.type === 'idcard') {
         if (this.inputCodeNum < this.number - 1) {
           if (event.keyCode < 48 || event.keyCode > 57) {
-            if (!this.error(this.inputCode)) {
-              //判断输入的值是否正确
-              this.inputCode = ''
-              return
-            }
+            //判断输入的值是否正确
+            this.inputCode = ''
+            return
           }
         } else {
           if (this.inputCodeNum === this.number - 1) {
-            if (
-              (event.keyCode < 48 || event.keyCode > 57) &&
-              event.keyCode !== 88
-            ) {
+            if ((event.keyCode < 48 || event.keyCode > 57) && event.keyCode !== 88) {
               this.inputCode = ''
               return
             }
@@ -205,10 +230,10 @@ export default {
       this.zIndex = -10
     },
     focusInput() {
-      console.log(this.typeName)
-      //获得焦点
+      // console.log(this.typeName)
+      // 获得焦点
       this.zIndex = 10
-      console.log('focusInput', this.refName[this.typeName])
+      // console.log('focusInput', this.refName[this.typeName])
       this.$refs[this.refName[this.typeName]].focus()
     }
   }
