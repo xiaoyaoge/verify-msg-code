@@ -185,21 +185,27 @@ export default {
     inputCodeEvent(event) {
       //每次输入的事件处理
       if (!this.inputCode) return
-      if (this.type === 'number' && (event.keyCode < 48 || event.keyCode > 57)) {
-        // 要求输入数字类型
-        this.inputCode = ''
-        return
+      if (this.type === 'number') {
+        if (/\D/.test(this.inputCode)) {
+          this.inputCode = ''
+          return
+        }
+      }
+      if(this.type==='txt'){
+        if(!(/[a-zA-Z0-9]/.test(this.inputCode))){
+          this.inputCode = ''
+          return
+        }
       }
       if (this.type === 'idcard') {
         if (this.inputCodeNum < this.number - 1) {
-          if (event.keyCode < 48 || event.keyCode > 57) {
-            //判断输入的值是否正确
+          if (/\D/.test(this.inputCode)) {
             this.inputCode = ''
             return
           }
         } else {
           if (this.inputCodeNum === this.number - 1) {
-            if ((event.keyCode < 48 || event.keyCode > 57) && event.keyCode !== 88) {
+            if (!(/\d|[xX]$/.test(this.inputCode))) {
               this.inputCode = ''
               return
             }
@@ -213,7 +219,6 @@ export default {
         this.inputCode = ''
         this.inputCodeNum++
         this.left = this.blockSize * this.inputCodeNum + '%'
-
         this.getInput(this.codeString) //回调获取输入值
       } else {
         if (this.inputCodeNum === this.number - 1) {
