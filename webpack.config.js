@@ -1,13 +1,11 @@
 var path = require('path')
 var webpack = require('webpack')
-
+const NODE_ENV = process.env.NODE_ENV;
 module.exports = {
-  entry: './src/lib/index.js',
-  // entry: './src/main.js',
+  entry: NODE_ENV == 'development' ? './src/main.js' : './src/lib/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    // filename: 'build.js',
     filename: 'VerifyMsgCode.js',
     library: 'VerifyMsgCode',
     libraryTarget: 'umd',
@@ -78,6 +76,11 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js'
     },
     extensions: ['*', '.js', '.vue', '.json']
+  },
+  node: {
+    fs: "empty",
+    child_process: "empty",
+    net: "empty",
   },
   devServer: {
     historyApiFallback: true,

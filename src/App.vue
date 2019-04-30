@@ -66,12 +66,8 @@
 </template>
 
 <script>
-// import verify-msg-code from 'verify-msg-code'
 export default {
   name: 'app',
-  // components: {
-  //   verify-msg-code
-  // },
   data() {
     return {
       msg: {
@@ -97,7 +93,7 @@ export default {
       this.$refs[opst].initInput()
     },
     getInput(e) {
-      // console.log('getInput', e)
+    //  console.log('getInput', e)
     },
     success(e) {
       // console.log('success', e)

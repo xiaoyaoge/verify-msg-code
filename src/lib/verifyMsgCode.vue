@@ -58,7 +58,6 @@
   </div>
 </template>
 <script type="text/babel">
-import '../style/inputCode.scss'
 let timer = null
 export default {
   name: 'verify-msg-code',
@@ -183,29 +182,32 @@ export default {
       }
     },
     inputCodeEvent(event) {
+      const numberVerify = /\D/
+      const textVerify = /[a-zA-Z0-9]/
+      const idcardVerify = /\d|[xX]$/
       //每次输入的事件处理
       if (!this.inputCode) return
       if (this.type === 'number') {
-        if (/\D/.test(this.inputCode)) {
+        if (numberVerify.test(this.inputCode)) {
           this.inputCode = ''
           return
         }
       }
       if(this.type==='txt'){
-        if(!(/[a-zA-Z0-9]/.test(this.inputCode))){
+        if(!(textVerify.test(this.inputCode))){
           this.inputCode = ''
           return
         }
       }
       if (this.type === 'idcard') {
         if (this.inputCodeNum < this.number - 1) {
-          if (/\D/.test(this.inputCode)) {
+          if (numberVerify.test(this.inputCode)) {
             this.inputCode = ''
             return
           }
         } else {
           if (this.inputCodeNum === this.number - 1) {
-            if (!(/\d|[xX]$/.test(this.inputCode))) {
+            if (!(idcardVerify.test(this.inputCode))) {
               this.inputCode = ''
               return
             }
@@ -244,3 +246,7 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+@import '../style/inputCode.scss'
+</style>
+
